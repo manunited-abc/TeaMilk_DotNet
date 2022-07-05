@@ -16,6 +16,7 @@ namespace TeaMilk.Controllers
         public ProductController(TEA_MILKContext context)
         {
             _context = context;
+        
         }
         [HttpGet("category/{id}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts(int id)
