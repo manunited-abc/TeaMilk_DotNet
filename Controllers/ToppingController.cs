@@ -10,25 +10,25 @@ namespace TeaMilk.Controllers
 {  
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class ToppingController : ControllerBase
     {
         private TEA_MILKContext _context;
-        public CategoryController(TEA_MILKContext context)
+        public ToppingController(TEA_MILKContext context)
         {
             _context = context;
         
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Topping>>> GetTopping()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Toppings.ToListAsync();
         }
         [HttpGet("{id}")]
-         public async Task<ActionResult<Category>> GetProductById(int id)
+         public async Task<ActionResult<Topping>> GetToppingById(int id)
         {   
             
-            var category  = await _context.Categories.FindAsync(id);         
-            return  category!=null?category:NotFound() ;
+            var topping  = await _context.Toppings.FindAsync(id);         
+            return  topping!=null?topping:NotFound() ;
         }
      }
 }

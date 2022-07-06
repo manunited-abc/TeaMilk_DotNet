@@ -26,6 +26,9 @@ namespace TeaMilk.Models
         public float? Price { get; set; }
         [Column("categoryId")]
         public int? CategoryId { get; set; }
+        [Column("images")]
+        [StringLength(500)]
+        public string Images { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
         [InverseProperty("Products")]

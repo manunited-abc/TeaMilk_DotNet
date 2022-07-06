@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gnLqw2Le+5x4g3bXH133fcZ6dS3h2/3MNdqpZyaN6zDgIRDktdKBnvTvAZl/0PwY/fmEjSvdqAVIEnAuU7opig==",
+  "dgSpecHash": "YXpYklp+I+w4egRD0mLlHIYalrbUZTykHvuF1z+stM34hQRZa8REIwtOO/5ORX8c3PjPSHlDt7tradh9npSImw==",
   "success": true,
   "projectFilePath": "E:\\Program Files\\Lập trình Dot Net\\Restful API\\TeaMilk\\TeaMilk.csproj",
   "expectedPackageFiles": [
@@ -130,6 +130,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.text.json\\5.0.0\\system.text.json.5.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",

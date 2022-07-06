@@ -14,7 +14,6 @@ namespace TeaMilk.Models
         public Category()
         {
             Products = new HashSet<Product>();
-            Toppings = new HashSet<Topping>();
         }
 
         [Key]
@@ -26,7 +25,5 @@ namespace TeaMilk.Models
 
         [InverseProperty(nameof(Product.Category))]
         public virtual ICollection<Product> Products { get; set; }
-        [InverseProperty(nameof(Topping.Category))]
-        public virtual ICollection<Topping> Toppings { get; set; }
     }
 }

@@ -66,18 +66,12 @@ namespace TeaMilk.Models
 
             modelBuilder.Entity<Product>(entity =>
             {
+                entity.Property(e => e.Images).IsUnicode(false);
+
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK__products__catego__38996AB5");
-            });
-
-            modelBuilder.Entity<Topping>(entity =>
-            {
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Toppings)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__toppings__catego__3D5E1FD2");
             });
 
             modelBuilder.Entity<ToppingDetail>(entity =>

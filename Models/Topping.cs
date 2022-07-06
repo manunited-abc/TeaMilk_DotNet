@@ -24,12 +24,7 @@ namespace TeaMilk.Models
         public string NameTopping { get; set; }
         [Column("price")]
         public float? Price { get; set; }
-        [Column("categoryId")]
-        public int? CategoryId { get; set; }
 
-        [ForeignKey(nameof(CategoryId))]
-        [InverseProperty("Toppings")]
-        public virtual Category Category { get; set; }
         [InverseProperty(nameof(ToppingDetail.Topping))]
         public virtual ICollection<ToppingDetail> ToppingDetails { get; set; }
     }

@@ -6,14 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TeaMilk.Models;
-using Microsoft.EntityFrameworkCore;
-
-
+using System.Text.Json.Serialization;
 namespace TeaMilk
 {
     public class Startup
@@ -28,11 +27,13 @@ namespace TeaMilk
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             services.AddControllers();
-            var connection  = Configuration.GetConnectionString("TeaMilkDB");
-            services.AddDbContext<TEA_MILKContext>(option => option.UseSqlServer(connection));
-      
-
+            services
+                .AddControllers();
+             
+            var connection = Configuration.GetConnectionString("TeaMilkDB");
+            services
+                .AddDbContext<TEA_MILKContext>(option =>
+                    option.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +42,6 @@ namespace TeaMilk
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            
             }
 
             app.UseHttpsRedirection();
@@ -50,10 +50,11 @@ namespace TeaMilk
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
         }
     }
 }
