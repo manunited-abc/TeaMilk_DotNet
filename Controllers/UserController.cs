@@ -60,7 +60,7 @@ namespace TeaMilk_DotNet.Controllers
 
             _context.UserInfos.Add(userInfo);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetUserById",
+            return CreatedAtAction("GetUserInfoById",
             new { id = userInfo.UserId },
             userInforDto);
         }

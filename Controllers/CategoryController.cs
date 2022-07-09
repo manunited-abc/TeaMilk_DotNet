@@ -19,12 +19,12 @@ namespace TeaMilk.Controllers
         
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
             return await _context.Categories.ToListAsync();
         }
         [HttpGet("{id}")]
-         public async Task<ActionResult<Category>> GetProductById(int id)
+         public async Task<ActionResult<Category>> GetCategoryById(int id)
         {   
             
             var category  = await _context.Categories.FindAsync(id);         
