@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,8 +14,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Cors;
 using TeaMilk.Models;
-using System.Text.Json.Serialization;
+
 namespace TeaMilk
 {
     public class Startup
@@ -28,8 +33,54 @@ namespace TeaMilk
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddControllers();
-             
+                .AddAuthentication(opt =>{
+                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }
+                )
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    
+                    options.TokenValidationParameters =
+                        new TokenValidationParameters()
+                        {
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidAudience = Configuration["Jwt:Audience"],
+                            ValidIssuer = Configuration["Jwt:Issuer"],
+                            ClockSkew = TimeSpan.Zero,
+                            IssuerSigningKey =
+                                new SymmetricSecurityKey(Encoding
+                                        .UTF8
+                                        .GetBytes(Configuration["Jwt:Key"]))
+                        };
+                });
+            services
+                .AddCors(options =>
+                {
+                    options
+                        .AddPolicy("CorsPolicy",
+                        builder =>
+                            builder
+                                .AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader());
+
+                    options
+                        .AddPolicy("signalr",
+                        builder =>
+                            builder
+                                .AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials()
+                                .SetIsOriginAllowed(hostName => true));
+                });
+            services.AddControllers();
+
             var connection = Configuration.GetConnectionString("TeaMilkDB");
             services
                 .AddDbContext<TEA_MILKContext>(option =>
@@ -49,6 +100,7 @@ namespace TeaMilk
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app
                 .UseEndpoints(endpoints =>

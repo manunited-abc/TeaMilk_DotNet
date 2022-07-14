@@ -76,20 +76,26 @@ namespace TeaMilk.Models
 
             modelBuilder.Entity<ToppingDetail>(entity =>
             {
-                entity.HasKey(e => new { e.OrderId, e.ToppingId })
-                    .HasName("pk_toppingDetail");
+                entity.HasKey(e => new { e.ToppingId, e.OrderId, e.ProductId })
+                    .HasName("pk_ttt");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.ToppingDetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__toppingDe__order__4316F928");
+                    .HasConstraintName("FK__toppingDe__order__123EB7A3");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ToppingDetails)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__toppingDe__produ__1332DBDC");
 
                 entity.HasOne(d => d.Topping)
                     .WithMany(p => p.ToppingDetails)
                     .HasForeignKey(d => d.ToppingId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__toppingDe__toppi__440B1D61");
+                    .HasConstraintName("FK__toppingDe__toppi__14270015");
             });
 
             modelBuilder.Entity<UserInfo>(entity =>
