@@ -17,13 +17,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Cors;
 using TeaMilk.Models;
-<<<<<<< HEAD
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-=======
->>>>>>> c50c369ad24f627d6a88ed350b5796f19d51a10c
 
 namespace TeaMilk
 {
