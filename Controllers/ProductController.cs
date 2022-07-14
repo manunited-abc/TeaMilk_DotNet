@@ -20,6 +20,21 @@ namespace TeaMilk.Controllers
             _context = context;
         }
 
+         [HttpGet]
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
+        {
+            return await _context
+                .Products
+                .ToListAsync();
+        }
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Product>>> SearchProduct(string search)
+        {
+            Console.WriteLine(search);
+            var products = from p in _context.Products join c in _context.Categories on p.CategoryId equals c.CategoryId 
+            where  p.NameProduct.Contains(search) ||  c.NameCategory.Contains(search) select p;
+            return await products.ToListAsync();
+        }
         [HttpGet("category/{id}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts(int id)
         {
@@ -54,7 +69,7 @@ namespace TeaMilk.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(int id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
 

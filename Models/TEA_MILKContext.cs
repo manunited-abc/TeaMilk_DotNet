@@ -25,14 +25,14 @@ namespace TeaMilk.Models
         public virtual DbSet<ToppingDetail> ToppingDetails { get; set; }
         public virtual DbSet<UserInfo> UserInfos { get; set; }
 
-//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//         {
-//             if (!optionsBuilder.IsConfigured)
-//             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                 optionsBuilder.UseSqlServer("Data Source=HIEU-ITNLU\\\\\\\\SQLEXPRESS,1433;Initial Catalog=TEA_MILK;User ID=kh;Password=hello");
-//             }
-//         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=HIEU-ITNLU\\\\\\\\SQLEXPRESS,1433;Initial Catalog=TEA_MILK;User ID=kh;Password=hello");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,20 +76,26 @@ namespace TeaMilk.Models
 
             modelBuilder.Entity<ToppingDetail>(entity =>
             {
-                entity.HasKey(e => new { e.OrderId, e.ToppingId })
-                    .HasName("pk_toppingDetail");
+                entity.HasKey(e => new { e.ToppingId, e.OrderId, e.ProductId })
+                    .HasName("pk_ttt");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.ToppingDetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__toppingDe__order__4316F928");
+                    .HasConstraintName("FK__toppingDe__order__123EB7A3");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ToppingDetails)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__toppingDe__produ__1332DBDC");
 
                 entity.HasOne(d => d.Topping)
                     .WithMany(p => p.ToppingDetails)
                     .HasForeignKey(d => d.ToppingId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__toppingDe__toppi__440B1D61");
+                    .HasConstraintName("FK__toppingDe__toppi__14270015");
             });
 
             modelBuilder.Entity<UserInfo>(entity =>
@@ -102,6 +108,8 @@ namespace TeaMilk.Models
                 entity.Property(e => e.Pass).IsUnicode(false);
 
                 entity.Property(e => e.Phone).IsUnicode(false);
+
+                entity.Property(e => e.Role).IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

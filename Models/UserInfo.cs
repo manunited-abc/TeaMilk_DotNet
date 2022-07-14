@@ -31,6 +31,9 @@ namespace TeaMilk.Models
         [Column("pass")]
         [StringLength(100)]
         public string Pass { get; set; }
+        [Column("role")]
+        [StringLength(50)]
+        public string Role { get; set; }
 
         [InverseProperty(nameof(Order.User))]
         public virtual ICollection<Order> Orders { get; set; }
