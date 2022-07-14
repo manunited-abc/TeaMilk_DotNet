@@ -6,13 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TeaMilk.Models;
 using TeaMilk.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TeaMilk_DotNet.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin")]
+
+
+     
     public class UserController : ControllerBase
-    {
+    {   
+        
         private TEA_MILKContext _context;
 
         public UserController(TEA_MILKContext context)
@@ -20,7 +26,18 @@ namespace TeaMilk_DotNet.Controllers
             _context = context;
         }
 
+         [HttpGet("ok")]
+        public  IActionResult Get()
+        {
+
+            
+            return Ok("ok");
+
+            
+        }
+
         [HttpGet("GetUsers")]
+      
         public  IActionResult GetUsers()
         {
             try
@@ -49,20 +66,40 @@ namespace TeaMilk_DotNet.Controllers
 
         [HttpPost("createUser")]
         public async Task<ActionResult<UserInfoDto>> PostUserInfo(UserInfoDto userInforDto)
-        {
-            var userInfo = new UserInfo{
-                // UserId = userInforDto.UserId,
+        {   
+            try
+            {  var userInfo = new UserInfo{
                 NameUser = userInforDto.NameUser,
                 Email = userInforDto.Email,
                 Phone = userInforDto.Phone,
-                Pass = userInforDto.Pass
-            };
+                Pass = userInforDto.Pass,
+                Role = userInforDto.Role
+                };
 
-            _context.UserInfos.Add(userInfo);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("GetUserInfoById",
-            new { id = userInfo.UserId },
-            userInforDto);
+                var userByName =  _context.UserInfos.FirstOrDefault(x => x.NameUser == userInfo.NameUser);
+                if (userByName != null)
+                {
+                    return BadRequest("UserName da ton tai");
+                }
+                var userByEmail =  _context.UserInfos.FirstOrDefault(x => x.Email == userInfo.Email);
+                if (userByEmail != null)
+                {
+                    return BadRequest("Email da dang ky");
+                }
+                 var userByPhone =  _context.UserInfos.FirstOrDefault(x => x.Phone == userInfo.Phone);
+                if (userByPhone != null)
+                {
+                    return BadRequest("Phone da dang ky");
+                }
+                _context.UserInfos.Add(userInfo);
+                 await _context.SaveChangesAsync();
+                return Created("Thanh cong",userInfo);
+            }
+            catch(Exception ex){
+                return BadRequest("Khong thanh cong");
+
+            }
+          
         }
 
         [HttpDelete("{id}")]
@@ -113,6 +150,8 @@ namespace TeaMilk_DotNet.Controllers
             return NoContent();
           
         }
+        
+       
 
 
     }

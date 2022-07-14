@@ -12,7 +12,7 @@ namespace TeaMilk.Models.Dto
            
         }
 
-        public int UserId { get; set; }
+       
 
         public string NameUser { get; set; }
 
@@ -21,6 +21,8 @@ namespace TeaMilk.Models.Dto
         public string Phone { get; set; }
 
         public string Pass { get; set; }
+
+        public string Role { get; set; }
 
     
     }
