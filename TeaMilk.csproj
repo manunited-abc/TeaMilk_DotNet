@@ -19,14 +19,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
-<<<<<<< HEAD
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.20" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.14.1" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.14.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
-=======
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.17.0" />
->>>>>>> c50c369ad24f627d6a88ed350b5796f19d51a10c
 
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />

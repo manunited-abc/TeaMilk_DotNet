@@ -36,53 +36,7 @@ namespace TeaMilk
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddAuthentication(opt =>{
-                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                }
-                )
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    
-                    options.TokenValidationParameters =
-                        new TokenValidationParameters()
-                        {
-                            ValidateLifetime = true,
-                            ValidateIssuerSigningKey = true,
-                            ValidateIssuer = true,
-                            ValidateAudience = true,
-                            ValidAudience = Configuration["Jwt:Audience"],
-                            ValidIssuer = Configuration["Jwt:Issuer"],
-                            ClockSkew = TimeSpan.Zero,
-                            IssuerSigningKey =
-                                new SymmetricSecurityKey(Encoding
-                                        .UTF8
-                                        .GetBytes(Configuration["Jwt:Key"]))
-                        };
-                });
-            services
-                .AddCors(options =>
-                {
-                    options
-                        .AddPolicy("CorsPolicy",
-                        builder =>
-                            builder
-                                .AllowAnyOrigin()
-                                .AllowAnyMethod()
-                                .AllowAnyHeader());
-
-                    options
-                        .AddPolicy("signalr",
-                        builder =>
-                            builder
-                                .AllowAnyMethod()
-                                .AllowAnyHeader()
-                                .AllowCredentials()
-                                .SetIsOriginAllowed(hostName => true));
-                });
+           
             services.AddControllers();
 
             var connection = Configuration.GetConnectionString("TeaMilkDB");
@@ -107,7 +61,6 @@ namespace TeaMilk
                     };
                 });
             services.AddMvc();
-            services.AddControllers();
             services.AddRazorPages();
         }
         
